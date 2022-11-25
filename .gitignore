@@ -1,0 +1,5 @@
+# ignore vendors
+**/vendor/**
+
+#ignore go.sum files
+**/go.sum

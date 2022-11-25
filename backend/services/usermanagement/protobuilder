@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+PROTO_FOLDER="../../../proto"
+SERVICE="usermanagement"
+PROTO_STUBS="./internal/umproto"
+
+rm -rf $PROTO_STUBS
+
+mkdir -p $PROTO_STUBS
+
+
+
+protoc -I $PROTO_FOLDER --go_out=$PROTO_STUBS --go-grpc_out=$PROTO_STUBS --go-grpc_opt=require_unimplemented_servers=false "$PROTO_FOLDER/$SERVICE.proto" "$PROTO_FOLDER/common.proto"

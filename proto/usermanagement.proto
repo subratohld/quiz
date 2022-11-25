@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package usermanagement;
+
+option go_package = ".;pb";
+
+service Usermanagement {
+    rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
+    rpc GetUserByID(GetUserByIDRequest) returns (GetUserByIDResponse) {}
+}
+
+message AddUserRequest {
+    common.AuthData authData = 1;
+    User user = 2;
+}
+
+message AddUserResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    User user = 3;
+}
+
+message GetUserByIDRequest {
+    common.AuthData authData = 1;
+}
+
+message GetUserByIDResponse {
+    int32 statusCode = 1;
+    string message = 2;
+    User user = 3;
+}
+
+message User {
+    string userId = 1;
+    string emailId = 2;
+    string mobileNumber = 3;
+    string firstName = 4;
+    string lastName = 5;
+    string address = 6;
+}

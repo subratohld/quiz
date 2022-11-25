@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = ".;pb";
+
+message AuthData {
+    string userId = 1;
+    string orgId = 2;
+    bool isSystem = 3;
+    repeated string roles = 4;
+}

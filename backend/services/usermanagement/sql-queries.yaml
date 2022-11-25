@@ -1,0 +1,14 @@
+data:
+  v1.0__create_um_table.sql: |-
+    CREATE SEQUENCE IF NOT EXISTS um_user_id_seq;
+
+    CREATE TABLE IF NOT EXISTS tbl_user(
+       id bigint NOT NULL DEFAULT nextval('um_user_id_seq'),
+       user_id text NOT NULL,
+       email_id text NOT NULL,
+       mobile_number text NOT NULL,
+       first_name text,
+       last_name text,
+       address text,
+       CONSTRAINT user_auto_id_pk PRIMARY KEY(id)
+    );
