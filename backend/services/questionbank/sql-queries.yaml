@@ -1,0 +1,34 @@
+data:
+  v1.0__create_qb_table.sql: |-
+    CREATE TABLE IF NOT EXISTS quiz(
+       id text NOT NULL,
+       created_by text NOT NULL,
+       created_on int4,
+       updated_by text,
+       upated_on int4,
+       description text,
+       CONSTRAINT qb_auto_id_quiz_pk PRIMARY KEY(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS questions(
+       id text NOT NULL,
+       created_by text NOT NULL,
+       created_on int4,
+       updated_by text,
+       upated_on int4,
+       description text,
+       answer_options jsonb,
+       CONSTRAINT qb_auto_id_question_pk PRIMARY KEY(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS answers(
+       id text NOT NULL,
+       created_by text NOT NULL,
+       created_on int4,
+       updated_by text,
+       upated_on int4,
+       description text,
+       linked_qn_id text,
+       CONSTRAINT qb_auto_id_answer_pk PRIMARY KEY(id)
+    );
+

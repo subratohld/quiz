@@ -8,5 +8,5 @@ message AuthData {
     string userId = 1;
     string orgId = 2;
     bool isSystem = 3;
-    repeated string roles = 4;
+    string role = 4;
 }

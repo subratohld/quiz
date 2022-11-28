@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package questionbank;
+
+option go_package = ".;pb";
+
+service questionbank {
+  rpc CreateQuiz (CreateQuizRequest) returns (CreateQuizResponse) {}
+  rpc AddQuestionsToQuizID (AddQuestionsToQuizRequest) returns (AddQuestionsToQuizResponse) {}
+  rpc AddAnswerToQuestionID (AddAnswerToQuestionRequest) returns (BaseResponse) {}
+}
+
+message CreateQuizRequest {
+  common.AuthData authData = 1;
+  string description = 2;
+}
+
+message CreateQuizResponse {
+  int32 statusCode = 1;
+  string message = 2;
+  Quiz quiz = 3;
+}
+
+message Quiz {
+  string Id = 1;
+  string description = 2;
+  string createdBy = 3;
+  int64 createdOn = 4;
+  string updatedBy = 5;
+  int64 updatedOn = 6;
+}
+
+message AddQuestionsToQuizRequest{
+  common.AuthData authData = 1;
+  string quizId = 2;
+  repeated Question questions = 3;
+}
+
+message Question{
+  string id = 1;
+  string description = 2;
+  string createdBy = 3;
+  int64 createdOn = 4;
+  string updatedBy = 5;
+  int64 updatedOn = 6;
+  repeated AnswerOptions options = 7;
+}
+
+message AnswerOptions{
+  string id = 1;
+  string description = 2;
+}
+
+message AddQuestionsToQuizResponse{
+  int32 statusCode = 1;
+  string message = 2;
+  repeated Question questions = 3;
+}
+
+message AddAnswerToQuestionRequest{
+  common.AuthData authData = 1;
+  Answer answer = 2;
+}
+
+message Answer{
+  string id = 1;
+  string description = 2;
+  string createdBy = 3;
+  int64 createdOn = 4;
+  string updatedBy = 5;
+  int64 updatedOn = 6;
+  string linkedQnId = 7;
+}
+
+message BaseResponse{
+  int32 statusCode = 1;
+  string message = 2;
+}

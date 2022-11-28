@@ -46,7 +46,7 @@ func InitLogger(options ...initLoggerOption) error {
 		applyOption(config)
 	}
 
-	logger, err := config.Build(zap.AddStacktrace(zap.DPanicLevel))
+	logger, err := config.Build(zap.AddStacktrace(zapcore.DPanicLevel))
 	if err != nil {
 		return err
 	}
