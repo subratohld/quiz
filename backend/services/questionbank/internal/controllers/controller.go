@@ -12,7 +12,7 @@ import qpb "github.com/subratohld/quiz/questionbank/internal/qbproto"
 type QuestionBank interface {
 	CreateQuiz(context.Context, *qpb.CreateQuizRequest) (*qpb.CreateQuizResponse, error)
 	AddQuestionsToQuizID(context.Context, *qpb.AddQuestionsToQuizRequest) (*qpb.AddQuestionsToQuizResponse, error)
-	AddAnswerToQuestionID(ctx context.Context, request *qpb.AddAnswerToQuestionRequest) (*qpb.BaseResponse, error)
+	AddAnswerToQuestionID(ctx context.Context, request *qpb.AddCorrectAnswerRequest) (*qpb.AddCorrectAnswerResponse, error)
 }
 
 type questionBankController struct {
@@ -61,6 +61,12 @@ func (q questionBankController) AddQuestionsToQuizID(ctx context.Context, req *q
 	return addQuestionsResponseMapper(successfullyAddedQns, http.StatusOK, cmn.SuccessfulQuizCreation), nil
 }
 
-func (q questionBankController) AddAnswerToQuestionID(ctx context.Context, req *qpb.AddAnswerToQuestionRequest) (*qpb.BaseResponse, error) {
+func (q questionBankController) AddAnswerToQuestionID(ctx context.Context, req *qpb.AddCorrectAnswerRequest) (*qpb.AddCorrectAnswerResponse, error) {
+	authData := authModelMapper(req.GetAuthData())
+	if authData.Error != nil {
+		// return addQuestionsResponseMapper(nil, http.StatusUnauthorized, cmn.ErrInAuthorization), nil
+	}
+
 	return nil, nil
+
 }

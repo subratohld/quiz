@@ -8,8 +8,8 @@ option go_package = ".;pb";
 
 service questionbank {
   rpc CreateQuiz (CreateQuizRequest) returns (CreateQuizResponse) {}
-  rpc AddQuestionsToQuizID (AddQuestionsToQuizRequest) returns (AddQuestionsToQuizResponse) {}
-  rpc AddAnswerToQuestionID (AddAnswerToQuestionRequest) returns (BaseResponse) {}
+  rpc AddQuestions (AddQuestionsToQuizRequest) returns (AddQuestionsToQuizResponse) {}
+  rpc AddCorrectAnswer (AddCorrectAnswerRequest) returns (AddCorrectAnswerResponse) {}
 }
 
 message CreateQuizRequest {
@@ -59,9 +59,11 @@ message AddQuestionsToQuizResponse{
   repeated Question questions = 3;
 }
 
-message AddAnswerToQuestionRequest{
+message AddCorrectAnswerRequest{
   common.AuthData authData = 1;
-  Answer answer = 2;
+  string id = 2;
+  string createdBy = 3;
+  string linkedQnId = 4;
 }
 
 message Answer{
@@ -74,7 +76,8 @@ message Answer{
   string linkedQnId = 7;
 }
 
-message BaseResponse{
+message AddCorrectAnswerResponse{
   int32 statusCode = 1;
   string message = 2;
+  Answer answer = 3;
 }

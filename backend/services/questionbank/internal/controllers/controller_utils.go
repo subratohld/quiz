@@ -35,12 +35,11 @@ func authModelMapper(auth *qpb.AuthData) *models.Auth {
 	authModel := &models.Auth{}
 	if auth == nil {
 		authModel.Error = errors.NewUnauthorizedError("No auth data provided")
-	} else if auth.GetRole() == "" || auth.GetUserId() == "" || auth.GetUserId() == "" {
+	} else if len(auth.GetRoles()) > 0 || auth.GetUserId() == "" || auth.GetUserId() == "" {
 		authModel.Error = errors.NewUnauthorizedError("No credentials data provided")
 	} else {
 		authModel.UserID = auth.GetUserId()
 		authModel.OrgID = auth.GetOrgId()
-		authModel.Role = auth.GetRole()
 		authModel.IsSystem = auth.GetIsSystem()
 	}
 
