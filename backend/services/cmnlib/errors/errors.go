@@ -2,6 +2,13 @@ package errors
 
 import "net/http"
 
+type SystemError interface {
+	Error() string
+	String() string
+	ToResponse() string
+	Code() int32
+}
+
 // Bad request error
 type BadRequest struct {
 	msg string
@@ -76,4 +83,29 @@ func (b *NotFoundError) Error() string {
 
 func (b *NotFoundError) StatusCode() int {
 	return http.StatusNotFound
+}
+
+// UnauthorizedError : Wrapper for unauthorized errors.
+type UnauthorizedError struct {
+	msg string
+}
+
+func (err *UnauthorizedError) Error() string {
+	return err.msg
+}
+
+func (err *UnauthorizedError) String() string {
+	return err.msg
+}
+
+func (err *UnauthorizedError) ToResponse() string {
+	return err.Error()
+}
+
+func (err *UnauthorizedError) Code() int32 {
+	return http.StatusUnauthorized
+}
+
+func NewUnauthorizedError(msg string) *UnauthorizedError {
+	return &UnauthorizedError{msg: msg}
 }
