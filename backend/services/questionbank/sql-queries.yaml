@@ -18,6 +18,7 @@ data:
        upated_on int4,
        description text,
        answer_options jsonb,
+       question_type text,
        CONSTRAINT qb_auto_id_question_pk PRIMARY KEY(id)
     );
 
@@ -27,7 +28,7 @@ data:
        created_on int4,
        updated_by text,
        upated_on int4,
-       description text,
+       answer_details jsonb,
        linked_qn_id text,
        CONSTRAINT qb_auto_id_answer_pk PRIMARY KEY(id)
     );

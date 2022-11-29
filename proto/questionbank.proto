@@ -46,6 +46,7 @@ message Question{
   string updatedBy = 5;
   int64 updatedOn = 6;
   repeated AnswerOptions options = 7;
+  string questionType = 8;
 }
 
 message AnswerOptions{
@@ -61,14 +62,14 @@ message AddQuestionsToQuizResponse{
 
 message AddCorrectAnswerRequest{
   common.AuthData authData = 1;
-  string id = 2;
+  repeated string answerDetails = 2;
   string createdBy = 3;
   string linkedQnId = 4;
 }
 
 message Answer{
   string id = 1;
-  string description = 2;
+  repeated AnswerOptions answerDetails = 2;
   string createdBy = 3;
   int64 createdOn = 4;
   string updatedBy = 5;

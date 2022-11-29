@@ -5,11 +5,15 @@ import (
 )
 
 type ControllerManager struct {
+	Quiz
 	QuestionBank
+	CorrectAnswer
 }
 
 func NewControllerManager(svcManager *services.ServiceManager) *ControllerManager {
 	return &ControllerManager{
-		QuestionBank: newQuestionBank(svcManager),
+		Quiz:          newQuiz(svcManager),
+		QuestionBank:  newQuestionBank(svcManager),
+		CorrectAnswer: newCorrectAnswer(svcManager),
 	}
 }

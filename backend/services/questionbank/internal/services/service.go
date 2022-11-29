@@ -11,6 +11,7 @@ type (
 	QuestionBank interface {
 		CreateQuiz(ctx context.Context, quizModel *models.Quiz) (*models.Quiz, error)
 		AddQuestionsToQuiz(ctx context.Context, questions []*models.Question) ([]*models.Question, error)
+		AddCorrectAnswerForQuestionID(ctx context.Context, answer *models.Answer) (*models.Answer, error)
 	}
 
 	questionBankSvc struct {
@@ -40,4 +41,13 @@ func (q *questionBankSvc) AddQuestionsToQuiz(ctx context.Context, questions []*m
 	}
 
 	return successfullyAddedQns, nil
+}
+
+func (q *questionBankSvc) AddCorrectAnswerForQuestionID(ctx context.Context, answer *models.Answer) (*models.Answer, error) {
+	answer, err := q.repoManager.QBRepo.AddCorrectAnswerToQuestionID(ctx, answer)
+	if err != nil {
+		return nil, err
+	}
+
+	return answer, nil
 }

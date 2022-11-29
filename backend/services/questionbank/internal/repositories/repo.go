@@ -16,6 +16,7 @@ type (
 	QuestionBank interface {
 		CreateQuiz(ctx context.Context, quizModel *models.Quiz) (*models.Quiz, error)
 		AddQuestionsToQuiz(ctx context.Context, questions []*models.Question) ([]*models.Question, error)
+		AddCorrectAnswerToQuestionID(ctx context.Context, answer *models.Answer) (*models.Answer, error)
 	}
 
 	questionBankRepo struct {
@@ -57,4 +58,16 @@ func (q *questionBankRepo) AddQuestionsToQuiz(ctx context.Context, questions []*
 	}
 
 	return successfulInsertionQnModels, nil
+}
+
+func (q *questionBankRepo) AddCorrectAnswerToQuestionID(ctx context.Context, answer *models.Answer) (*models.Answer, error) {
+	answer.ID = cmnutil.GenerateUUID()
+	answer.CreatedOn = time.Now().Unix()
+	_, err := q.DBManager.QuestionBankDB.ModelContext(ctx, answer).Insert()
+	if err != nil {
+		logger.Logger().Error(consts.ErrAddingCorrectAnswerInDB, zap.Error(err))
+		return nil, cmnErr.NewDBError(err.Error())
+	}
+
+	return answer, nil
 }

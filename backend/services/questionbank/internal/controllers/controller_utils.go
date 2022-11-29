@@ -97,3 +97,46 @@ func addQuestionsResponseMapper(questions []*models.Question, statusCode int32, 
 
 	return response
 }
+
+func addCorrectAnsReqMapper(user string, answerOptions []string, linkedQnID string) *models.Answer {
+	var ansOptionsModel []*models.AnswerOptions
+	for _, answerOption := range answerOptions {
+		ansOptionsModel = append(ansOptionsModel, &models.AnswerOptions{
+			OptionId: answerOption,
+		})
+	}
+
+	return &models.Answer{
+		AnswerDetails: ansOptionsModel,
+		CreatedBy:     user,
+		LinkedQnId:    linkedQnID,
+	}
+}
+
+func addCorrectAnsResMapper(answer *models.Answer, statusCode int32, message string) *qpb.AddCorrectAnswerResponse {
+	response := &qpb.AddCorrectAnswerResponse{}
+
+	if answer != nil {
+		var listOfAnswerDetailsResp []*qpb.AnswerOptions
+		for _, ansDetails := range answer.AnswerDetails {
+			listOfAnswerDetailsResp = append(listOfAnswerDetailsResp, &qpb.AnswerOptions{
+				Id:          ansDetails.OptionId,
+				Description: ansDetails.OptionDescription,
+			})
+		}
+		response.Answer = &qpb.Answer{
+			Id:            answer.ID,
+			AnswerDetails: listOfAnswerDetailsResp,
+			CreatedBy:     answer.CreatedBy,
+			CreatedOn:     answer.CreatedOn,
+			UpdatedBy:     answer.UpdatedBy,
+			UpdatedOn:     answer.UpdatedOn,
+			LinkedQnId:    answer.LinkedQnId,
+		}
+	}
+
+	response.Message = message
+	response.StatusCode = statusCode
+
+	return response
+}
