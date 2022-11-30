@@ -8,7 +8,7 @@ option go_package = ".;pb";
 
 service questionbank {
   rpc CreateQuiz (CreateQuizRequest) returns (CreateQuizResponse) {}
-  rpc AddQuestions (AddQuestionsToQuizRequest) returns (AddQuestionsToQuizResponse) {}
+  rpc AddQuestions (AddQuestionsRequest) returns (AddQuestionsResponse) {}
   rpc AddCorrectAnswer (AddCorrectAnswerRequest) returns (AddCorrectAnswerResponse) {}
 }
 
@@ -32,7 +32,7 @@ message Quiz {
   int64 updatedOn = 6;
 }
 
-message AddQuestionsToQuizRequest{
+message AddQuestionsRequest{
   common.AuthData authData = 1;
   string quizId = 2;
   repeated Question questions = 3;
@@ -54,7 +54,7 @@ message AnswerOptions{
   string description = 2;
 }
 
-message AddQuestionsToQuizResponse{
+message AddQuestionsResponse{
   int32 statusCode = 1;
   string message = 2;
   repeated Question questions = 3;

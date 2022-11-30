@@ -10,7 +10,7 @@ import (
 )
 
 type QuestionBank interface {
-	AddQuestions(context.Context, *qpb.AddQuestionsToQuizRequest) (*qpb.AddQuestionsToQuizResponse, error)
+	AddQuestions(context.Context, *qpb.AddQuestionsRequest) (*qpb.AddQuestionsResponse, error)
 }
 
 type questionBankController struct {
@@ -24,7 +24,7 @@ func newQuestionBank(svcManager *services.ServiceManager) QuestionBank {
 }
 
 // TODO: Add question type. MultipleChoiceQuestion(MCQ) / SingleChoiceQuestion(SCQ)
-func (q questionBankController) AddQuestions(ctx context.Context, req *qpb.AddQuestionsToQuizRequest) (*qpb.AddQuestionsToQuizResponse, error) {
+func (q questionBankController) AddQuestions(ctx context.Context, req *qpb.AddQuestionsRequest) (*qpb.AddQuestionsResponse, error) {
 	authData := authModelMapper(req.GetAuthData())
 	if authData.Error != nil {
 		return addQuestionsResponseMapper(nil, http.StatusUnauthorized, cmn.ErrInAuthorization), nil
@@ -44,5 +44,4 @@ func (q questionBankController) AddQuestions(ctx context.Context, req *qpb.AddQu
 	}
 
 	return addQuestionsResponseMapper(successfullyAddedQns, http.StatusOK, fmt.Sprintf("%s %s", cmn.SuccessfulQuestionCreation, req.QuizId)), nil
-
 }

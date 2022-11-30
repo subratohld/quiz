@@ -66,8 +66,8 @@ func addQuestionsReqMapper(user string, reqQns []*qpb.Question) []*models.Questi
 	return questions
 }
 
-func addQuestionsResponseMapper(questions []*models.Question, statusCode int32, message string) *qpb.AddQuestionsToQuizResponse {
-	response := &qpb.AddQuestionsToQuizResponse{}
+func addQuestionsResponseMapper(questions []*models.Question, statusCode int32, message string) *qpb.AddQuestionsResponse {
+	response := &qpb.AddQuestionsResponse{}
 
 	if len(questions) > 0 {
 		for _, qn := range questions {
