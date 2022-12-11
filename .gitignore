@@ -3,3 +3,7 @@
 
 #ignore go.sum files
 **/go.sum
+
+.idea/*
+
+**/.DS_Store

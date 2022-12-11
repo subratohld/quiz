@@ -23,7 +23,7 @@ func newCorrectAnswer(svcManager *services.ServiceManager) CorrectAnswer {
 	}
 }
 
-// TODO : While processing the request to add correct answer, check if the linked question type is MCQ / SCQ . User has to provide the answer details accordingly.
+// AddCorrectAnswer checks the request to add correct answer, if the linked question type is MCQ / SCQ . User has to provide the answer details accordingly.
 func (c correctAnswerController) AddCorrectAnswer(ctx context.Context, req *qpb.AddCorrectAnswerRequest) (*qpb.AddCorrectAnswerResponse, error) {
 	authData := authModelMapper(req.GetAuthData())
 	if authData.Error != nil {
@@ -39,7 +39,7 @@ func (c correctAnswerController) AddCorrectAnswer(ctx context.Context, req *qpb.
 	}
 
 	answer, err := c.svcManager.QBService.AddCorrectAnswerForQuestionID(ctx, addCorrectAnsReqMapper(authData.UserID, req.GetAnswerDetails(), req.LinkedQnId))
-	if err != nil {
+	if err != nil || answer == nil{
 		return addCorrectAnsResMapper(nil, http.StatusInternalServerError, err.Error()), nil
 	}
 

@@ -38,6 +38,11 @@ message AddQuestionsRequest{
   repeated Question questions = 3;
 }
 
+enum QUESTION_TYPE{
+  MULTIPLE_CHOICE_QN = 0;
+  SINGLE_CHOICE_QN = 1;
+}
+
 message Question{
   string id = 1;
   string description = 2;
@@ -46,7 +51,7 @@ message Question{
   string updatedBy = 5;
   int64 updatedOn = 6;
   repeated AnswerOptions options = 7;
-  string questionType = 8;
+  QUESTION_TYPE questionType = 8;
 }
 
 message AnswerOptions{

@@ -2,8 +2,8 @@ package services
 
 import (
 	"context"
-
 	"github.com/subratohld/quiz/questionbank/internal/models"
+	qbPb "github.com/subratohld/quiz/questionbank/internal/qbproto"
 	"github.com/subratohld/quiz/questionbank/internal/repositories"
 )
 
@@ -43,11 +43,18 @@ func (q *questionBankSvc) AddQuestionsToQuiz(ctx context.Context, questions []*m
 	return successfullyAddedQns, nil
 }
 
-func (q *questionBankSvc) AddCorrectAnswerForQuestionID(ctx context.Context, answer *models.Answer) (*models.Answer, error) {
-	answer, err := q.repoManager.QBRepo.AddCorrectAnswerToQuestionID(ctx, answer)
-	if err != nil {
-		return nil, err
+func (q *questionBankSvc) AddCorrectAnswerForQuestionID(ctx context.Context, answer *models.Answer) (result *models.Answer, err error) {
+	qnDetails, qErr := q.repoManager.QBRepo.GetQuestionByQuestionID(ctx, answer.LinkedQnId)
+	if qErr != nil{
+		return nil, qErr
 	}
 
-	return answer, nil
+	if _ , ok := qbPb.QUESTION_TYPE_value[qnDetails.QuestionType]; ok {
+		result, err = q.repoManager.QBRepo.AddCorrectAnswerToQuestionID(ctx, answer)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return result, nil
 }

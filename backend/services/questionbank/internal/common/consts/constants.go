@@ -10,6 +10,8 @@ const (
 	ErrLinkedQuestionIDMissing = "linked question id for the answer options are missing"
 	ErrAddingCorrectAnswerInDB = "error while inserting correct answer for the question"
 
+	ErrFetchingQuestionFromDB = "error while fetching the question with ID"
+
 	SuccessfulQuizCreation       = "successfully created quiz"
 	SuccessfulQuestionCreation   = "successfully added question to the quiz"
 	SuccessfulCorrectAnsCreation = "successfully added correct answer to the question"
